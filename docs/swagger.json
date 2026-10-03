@@ -1,0 +1,387 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Experiencias Profesionales",
+    "version": "1.0.0",
+    "description": "CRUD de experiencias profesionales para las hojas de vida del equipo (Unidad 3). Express.js + MongoDB."
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Experiencias"
+    }
+  ],
+  "paths": {
+    "/api/experiencias": {
+      "get": {
+        "tags": [
+          "Experiencias"
+        ],
+        "summary": "Listar experiencias",
+        "description": "Ordenadas de la más reciente a la más antigua.",
+        "parameters": [
+          {
+            "name": "persona",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "emuar",
+                "laura",
+                "fabian"
+              ]
+            },
+            "description": "Filtra por hoja de vida"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de experiencias",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Experiencia"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Experiencias"
+        ],
+        "summary": "Crear una experiencia",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExperienciaInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Experiencia creada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Experiencia"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/experiencias/{id}": {
+      "get": {
+        "tags": [
+          "Experiencias"
+        ],
+        "summary": "Obtener una experiencia por id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ObjectId de MongoDB"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Experiencia encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Experiencia"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Experiencias"
+        ],
+        "summary": "Actualizar una experiencia",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ObjectId de MongoDB"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExperienciaInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Experiencia actualizada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Experiencia"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Experiencias"
+        ],
+        "summary": "Eliminar una experiencia",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ObjectId de MongoDB"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Eliminada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mensaje": {
+                      "type": "string"
+                    },
+                    "eliminada": {
+                      "$ref": "#/components/schemas/Experiencia"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ExperienciaInput": {
+        "type": "object",
+        "properties": {
+          "persona": {
+            "type": "string",
+            "enum": [
+              "emuar",
+              "laura",
+              "fabian"
+            ],
+            "example": "emuar"
+          },
+          "empresa": {
+            "type": "string",
+            "example": "Juke Coffe"
+          },
+          "cargo": {
+            "type": "string",
+            "example": "Barista / Atención al cliente"
+          },
+          "fechaInicio": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-10-01"
+          },
+          "fechaFin": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "example": "2026-05-31",
+            "description": "Obligatoria salvo que actual = true"
+          },
+          "actual": {
+            "type": "boolean",
+            "example": false
+          },
+          "descripcion": {
+            "type": "string",
+            "maxLength": 600,
+            "example": "Atención al cliente y preparación de bebidas."
+          }
+        },
+        "required": [
+          "persona",
+          "empresa",
+          "cargo",
+          "fechaInicio"
+        ]
+      },
+      "Experiencia": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "665f1c2e8b3c2a0012ab34cd"
+          },
+          "persona": {
+            "type": "string",
+            "enum": [
+              "emuar",
+              "laura",
+              "fabian"
+            ],
+            "example": "emuar"
+          },
+          "empresa": {
+            "type": "string",
+            "example": "Juke Coffe"
+          },
+          "cargo": {
+            "type": "string",
+            "example": "Barista / Atención al cliente"
+          },
+          "fechaInicio": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-10-01"
+          },
+          "fechaFin": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "example": "2026-05-31",
+            "description": "Obligatoria salvo que actual = true"
+          },
+          "actual": {
+            "type": "boolean",
+            "example": false
+          },
+          "descripcion": {
+            "type": "string",
+            "maxLength": 600,
+            "example": "Atención al cliente y preparación de bebidas."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "detalles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

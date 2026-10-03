@@ -1,0 +1,20 @@
+{
+  "name": "api-experiencias-hv",
+  "version": "1.0.0",
+  "description": "API REST (CRUD) de experiencias profesionales para las hojas de vida del equipo. Express.js + MongoDB.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node scripts/seed.js",
+    "test": "node scripts/test-api.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "swagger-ui-express": "^5.0.1"
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "info": {
+    "name": "API Experiencias HV - Unidad 3",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Crear experiencia (POST)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"201 Created\", () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set(\"id\", pm.response.json()._id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"persona\": \"laura\",\n  \"empresa\": \"Tienda Ejemplo\",\n  \"cargo\": \"Vendedora\",\n  \"fechaInicio\": \"2025-02-01\",\n  \"fechaFin\": \"2025-08-30\",\n  \"actual\": false,\n  \"descripcion\": \"Atención al cliente y manejo de caja.\"\n}"
+        },
+        "url": "{{baseUrl}}/api/experiencias"
+      }
+    },
+    {
+      "name": "2. Listar todas (GET)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"200 OK\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/experiencias"
+      }
+    },
+    {
+      "name": "3. Listar por persona (GET ?persona=laura)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"200 OK\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/experiencias?persona=laura"
+      }
+    },
+    {
+      "name": "4. Obtener por id (GET)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"200 OK\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/experiencias/{{id}}"
+      }
+    },
+    {
+      "name": "5. Actualizar (PUT)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"200 OK\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"persona\": \"laura\",\n  \"empresa\": \"Tienda Ejemplo\",\n  \"cargo\": \"Vendedora senior\",\n  \"fechaInicio\": \"2025-02-01\",\n  \"fechaFin\": \"2025-08-30\",\n  \"actual\": false,\n  \"descripcion\": \"Atención al cliente y manejo de caja.\"\n}"
+        },
+        "url": "{{baseUrl}}/api/experiencias/{{id}}"
+      }
+    },
+    {
+      "name": "6. Eliminar (DELETE)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"200 OK\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/api/experiencias/{{id}}"
+      }
+    },
+    {
+      "name": "7. Error: datos inválidos (POST)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"400 Bad Request\", () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"persona\": \"laura\"\n}"
+        },
+        "url": "{{baseUrl}}/api/experiencias"
+      }
+    },
+    {
+      "name": "8. Error: id inexistente (GET)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"404 Not Found\", () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/experiencias/000000000000000000000000"
+      }
+    }
+  ]
+}
