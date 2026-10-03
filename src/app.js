@@ -17,6 +17,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // API
 app.get('/api', (req, res) => res.json({ mensaje: 'API de experiencias profesionales', docs: '/api-docs' }));
+app.get('/', (req, res) => res.redirect('/api-docs'));
 app.use('/api/experiencias', experienciasRoutes);
 app.use('/api', noEncontrada);
 
